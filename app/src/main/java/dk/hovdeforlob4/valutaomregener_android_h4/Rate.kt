@@ -13,5 +13,3 @@ class Rate {
         this.spotRate = spotRate
     }
 }
-//REMOVE mockcurrency
-//REMOVE fixercurrency
