@@ -8,13 +8,19 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.createBitmap
+import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide() // removes the actionbar
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //setContentView(R.layout.activity_main)
 
         /**
          * @see_interface interfaces implementation: https://www.youtube.com/watch?v=5C7W98VVI88
@@ -29,8 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         var baseArr:Array<String> = getAllBaseCurrency(mockData)
         setSpinner(baseArr)
-
-        setListView(mockData)
+        val arr = convertListToArray(mockData)
+        setListView(arr)
+        //binding.listview.adapter = ListViewAdapter(this, arr)
+        Log.d("list_view", "method run")
 
     }
 
@@ -74,14 +82,25 @@ class MainActivity : AppCompatActivity() {
         spinnerLst!!.setAdapter(aa)
     }
 
-    fun setListView(ratesLst:List<Rate>){
-        val listView_rates = findViewById<ListView>(R.id.listview_)
-//        val arrayAdapter: ArrayAdapter<String> =
-//            ArrayAdapter<String>(this,  listView_rates, ratesLst)
+    fun setListView(ratesLst:ArrayList<Rate>){
+        Log.d("list_view", "inside methode")
+        binding.listview.adapter = ListViewAdapter(this, ratesLst)
+//        val listView_rates = findViewById<ListView>(R.id.listview_)
+////        val arrayAdapter: ArrayAdapter<String> =
+////            ArrayAdapter<String>(this,  listView_rates, ratesLst)
+//
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ratesLst)
+//        listView_rates.adapter = adapter
+////      listView_rates.setAdapter(adapter)
+    }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ratesLst)
-        listView_rates.adapter = adapter
-//      listView_rates.setAdapter(adapter)
+    fun convertListToArray(ratesLst:List<Rate>): ArrayList<Rate> {
+        val output = mutableListOf<Rate>()
+
+        for (item in ratesLst){
+            output.add(Rate(item.name, item.spotRate))
+        }
+        return output.toTypedArray().toCollection(ArrayList())
     }
 
 }
