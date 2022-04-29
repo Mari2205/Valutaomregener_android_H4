@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
         val temp = ""
     }
 
+
+    /**
+     * @see_volley https://google.github.io/volley/simple.html
+     */
     fun downloadTasks2(){
 
         StrictMode.setThreadPolicy(
