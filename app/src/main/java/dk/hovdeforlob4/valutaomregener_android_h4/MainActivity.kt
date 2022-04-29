@@ -1,6 +1,7 @@
 package dk.hovdeforlob4.valutaomregener_android_h4
 
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -9,6 +10,10 @@ import android.widget.ListView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.createBitmap
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBinding
 
 
@@ -40,7 +45,57 @@ class MainActivity : AppCompatActivity() {
         //binding.listview.adapter = ListViewAdapter(this, arr)
         Log.d("list_view", "method run")
 
+
+
+    //    val fixerCurrency = FixerCurrency(this)
+    downloadTasks2()
+
     }
+
+    val apiUrl = "https://jsonplaceholder.typicode.com/posts"
+
+    fun downloadTasks(){
+        Log.d("respones", "method start")
+
+        val queue = Volley.newRequestQueue(this)
+
+        val reques = StringRequest(Request.Method.GET,apiUrl,
+            Response.Listener { response ->
+
+                Log.d("respones", "Response : ${response.toString()}")
+
+            }, Response.ErrorListener { Log.d("respones", "that din´t work!") })
+        queue.add(reques)
+        val temp = ""
+    }
+
+    fun downloadTasks2(){
+
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build()
+        )
+        // Instantiate the RequestQueue.
+        val queue = Volley.newRequestQueue(this)
+        val url = "https://jsonplaceholder.typicode.com/posts"
+
+// Request a string response from the provided URL.
+        val stringRequest = StringRequest(Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                // Display the first 500 characters of the response string.
+                Log.d("respones","Response is: ${response.substring(0, 500)}")
+            },
+            Response.ErrorListener { error -> Log.d("respones","That didn't work! | $error") })
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest)
+    }
+
+
+
+
+
+
+
 
     fun getSpinnerSelectedValue(view:View){
         val textbox = findViewById<EditText>(R.id.editText_valuta)
