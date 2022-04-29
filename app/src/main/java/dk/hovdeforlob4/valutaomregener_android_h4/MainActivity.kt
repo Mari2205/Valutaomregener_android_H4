@@ -82,18 +82,23 @@ class MainActivity : AppCompatActivity() {
         spinnerLst!!.setAdapter(aa)
     }
 
+
+    /**
+     * this method sets listview wiget with a custom layout with cuency rates (rate(DKK) and values(1.553))
+     */
     fun setListView(ratesLst:ArrayList<Rate>){
         Log.d("list_view", "inside methode")
         binding.listview.adapter = ListViewAdapter(this, ratesLst)
-//        val listView_rates = findViewById<ListView>(R.id.listview_)
-////        val arrayAdapter: ArrayAdapter<String> =
-////            ArrayAdapter<String>(this,  listView_rates, ratesLst)
-//
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ratesLst)
-//        listView_rates.adapter = adapter
-////      listView_rates.setAdapter(adapter)
+//rm      val listView_rates = findViewById<ListView>(R.id.listview_)
+//rm      val arrayAdapter: ArrayAdapter<String> =
+//rm           ArrayAdapter<String>(this,  listView_rates, ratesLst)
+
+//rm      val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ratesLst)
+//rm      listView_rates.adapter = adapter
+//rm      listView_rates.setAdapter(adapter)
     }
 
+    //TODO: maybe remove later on
     fun convertListToArray(ratesLst:List<Rate>): ArrayList<Rate> {
         val output = mutableListOf<Rate>()
 
