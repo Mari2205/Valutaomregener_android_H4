@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 
@@ -26,8 +27,10 @@ class MainActivity : AppCompatActivity() {
         Log.d("mock data", "mock data      : ${mockData[0]}")
         Log.d("mock data", "mock data temp : ${mockData_temp[0].name}")
 
-        var baseArr:Array<String> = getAllCurrencyBase(mockData)
+        var baseArr:Array<String> = getAllBaseCurrency(mockData)
         setSpinner(baseArr)
+
+        setListView(mockData)
 
     }
 
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity() {
      * this method takes an list of Rates og sorter all currency bases into an array of string
      * @see_loops Doc for kotlin Loops : https://kotlinlang.org/docs/control-flow.html#for-loops
      */
-    fun getAllCurrencyBase(rateLst:List<Rate>):Array<String>{
+    fun getAllBaseCurrency(rateLst:List<Rate>):Array<String>{
 
         val currencyBaseArrLst: MutableList<String> = ArrayList()
 
@@ -70,4 +73,15 @@ class MainActivity : AppCompatActivity() {
         // Set Adapter to Spinner
         spinnerLst!!.setAdapter(aa)
     }
+
+    fun setListView(ratesLst:List<Rate>){
+        val listView_rates = findViewById<ListView>(R.id.listview_)
+//        val arrayAdapter: ArrayAdapter<String> =
+//            ArrayAdapter<String>(this,  listView_rates, ratesLst)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ratesLst)
+        listView_rates.adapter = adapter
+//      listView_rates.setAdapter(adapter)
+    }
+
 }
