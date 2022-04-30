@@ -24,6 +24,7 @@ import org.json.JSONObject
 //TODO: look how manny lines removed in this class
 //TODO: marby make dev notes file
 //TODO: use the currencyPresenter class
+//TODO: Clean up / refactor
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -52,12 +53,29 @@ class MainActivity : AppCompatActivity() {
         //binding.listview.adapter = ListViewAdapter(this, arr)
         Log.d("list_view", "method run")
 
-        val mockDataJson = mockDataObj.jsonRespose()
-        val j = JsonParser(mockDataJson)
-        j.convertToCurrencyModel()
+//        val mockDataJson = mockDataObj.jsonRespose()
+//        val j = JsonParser(mockDataJson)
+//        j.convertToCurrencyModel()
 //        jsonHolder(mockDataJson)
         //    val fixerCurrency = FixerCurrency(this)
         //    downloadTasks2()
+
+
+
+
+//        val jparser = JsonParser(mockDataJson)
+//        val calc = CurrencyCalculator()
+//
+//        val data = jparser.convertToCurrencyModel()
+//
+//        val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
+//        val usrBase: String = spinner_wig.getSelectedItem().toString()
+//        val value = calc.calcultRates(usrBase, data.rates)
+//        val baseRate = value.first
+//        val usrRate = value.second
+//        val completValue = calc.calcultValue(baseRate,usrRate,100.00, data.rates)//TODO: make overload
+
+
 
     }
 
@@ -133,6 +151,29 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 //    }
+
+    fun calcBtn(view: View){
+        val textbox = findViewById<EditText>(R.id.editText_valuta)
+
+        val mockDataObj = MockCurrency()
+        val mockDataJson = mockDataObj.jsonRespose()
+        val jparser = JsonParser(mockDataJson)
+        val calc = CurrencyCalculator()
+
+        val data = jparser.convertToCurrencyModel()
+
+        val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
+        val usrBase: String = spinner_wig.getSelectedItem().toString()
+        val value = calc.calcultRates(usrBase, data.rates)
+        val baseRate = value.first
+        val usrRate = value.second
+        val input_value = textbox.text.toString().toDouble()
+        val completValue = calc.calcultValue(usrBase, usrRate, input_value, data.rates)//TODO: make overload
+
+
+        val arr = convertListToArray(completValue)
+        setListView(arr)
+    }
 
 
     fun getSpinnerSelectedValue(view: View) {
