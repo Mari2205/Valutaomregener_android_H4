@@ -14,7 +14,12 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBinding
+import org.json.JSONArray
+import org.json.JSONObject
+
+//import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,42 +43,40 @@ class MainActivity : AppCompatActivity() {
         Log.d("mock data", "mock data      : ${mockData[0]}")
         Log.d("mock data", "mock data temp : ${mockData_temp[0].name}")
 
-        var baseArr:Array<String> = getAllBaseCurrency(mockData)
+        var baseArr: Array<String> = getAllBaseCurrency(mockData)
         setSpinner(baseArr)
         val arr = convertListToArray(mockData)
         setListView(arr)
         //binding.listview.adapter = ListViewAdapter(this, arr)
         Log.d("list_view", "method run")
 
-
-
-    //    val fixerCurrency = FixerCurrency(this)
-    downloadTasks2()
+        val mockDataJson = mockDataObj.jsonRespose()
+        val j = JsonParser(mockDataJson)
+        j.ConvertToCurrercyModel()
+        jsonHolder(mockDataJson)
+        //    val fixerCurrency = FixerCurrency(this)
+        //    downloadTasks2()
 
     }
 
     val apiUrl = "https://jsonplaceholder.typicode.com/posts"
-
-    fun downloadTasks(){
+    fun downloadTasks() {
         Log.d("respones", "method start")
 
         val queue = Volley.newRequestQueue(this)
 
-        val reques = StringRequest(Request.Method.GET,apiUrl,
+        val reques = StringRequest(Request.Method.GET, apiUrl,
             Response.Listener { response ->
 
                 Log.d("respones", "Response : ${response.toString()}")
 
             }, Response.ErrorListener { Log.d("respones", "that din´t work!") })
         queue.add(reques)
-        val temp = ""
     }
-
-
     /**
      * @see_volley https://google.github.io/volley/simple.html
      */
-    fun downloadTasks2(){
+    fun downloadTasks2() {
 
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build()
@@ -86,22 +89,51 @@ class MainActivity : AppCompatActivity() {
         val stringRequest = StringRequest(Request.Method.GET, url,
             Response.Listener<String> { response ->
                 // Display the first 500 characters of the response string.
-                Log.d("respones","Response is: ${response.substring(0, 500)}")
+                Log.d("respones", "Response is: ${response.substring(0, 500)}")
             },
-            Response.ErrorListener { error -> Log.d("respones","That didn't work! | $error") })
+            Response.ErrorListener { error -> Log.d("respones", "That didn't work! | $error") })
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest)
     }
 
 
+    fun jsonHolder(data: String) {
+        val gson = Gson()
+        var test:CurrencyModel = gson.fromJson(data,CurrencyModel::class.java)
+        println("from json string: " + test)
+//        val mapper = jacksonObjectMapper()
+//        val jData: List<CurrencyModel> = mapper.readValue(data)
+
+        val j = JSONObject(data)
+//        val js = gson.fromJson(j, Rate::class.java)
+        val jArray = JSONArray(data)
+
+        for (item in 0..jArray.length() - 1) {
+            var jObj = jArray.getJSONObject(item)
+            var userId = jObj.getInt("userId")
+            var id = jObj.getInt("id")
+            var title = jObj.getString("title")
+            var body = jObj.getString("body")
+            Log.d(
+                "jsonobj", "\n" +
+                        "userId : ${userId.toString()}\n" +
+                        "id     : ${id.toString()}\n" +
+                        "title  : ${title.toString()}\n" +
+                        "body   : ${body.toString()}\n" +
+                        "------------------------"
+            )
+//            Log.e("respones", "userId : ${userId.toString()}")
+//            Log.e("respones", "id     : ${id.toString()}")
+//            Log.e("respones", "title  : ${title.toString()}")
+//            Log.e("respones", "body   : ${body.toString()}")
+//            Log.e("respones", "-----------------------------------")
+
+        }
+    }
 
 
-
-
-
-
-    fun getSpinnerSelectedValue(view:View){
+    fun getSpinnerSelectedValue(view: View) {
         val textbox = findViewById<EditText>(R.id.editText_valuta)
         val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
         val text: String = spinner_wig.getSelectedItem().toString()
@@ -114,11 +146,11 @@ class MainActivity : AppCompatActivity() {
      * this method takes an list of Rates og sorter all currency bases into an array of string
      * @see_loops Doc for kotlin Loops : https://kotlinlang.org/docs/control-flow.html#for-loops
      */
-    fun getAllBaseCurrency(rateLst:List<Rate>):Array<String>{
+    fun getAllBaseCurrency(rateLst: List<Rate>): Array<String> {
 
         val currencyBaseArrLst: MutableList<String> = ArrayList()
 
-        for (item in rateLst){
+        for (item in rateLst) {
             currencyBaseArrLst.add(item.name)
         }
 
@@ -130,7 +162,7 @@ class MainActivity : AppCompatActivity() {
      * this method sets array of currency base to the spinner(dropdown box)
      * @see_spinner Example code on spinner : https://www.tutorialkart.com/kotlin-android/android-spinner-kotlin-example/
      */
-    fun setSpinner(baseArr:Array<String>){
+    fun setSpinner(baseArr: Array<String>) {
         val spinnerLst = findViewById<Spinner>(R.id.spinner_base)
         // TODO: look into adapter
         // Create an ArrayAdapter using a simple spinner layout and languages array
@@ -145,7 +177,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * this method sets listview wiget with a custom layout with cuency rates (rate(DKK) and values(1.553))
      */
-    fun setListView(ratesLst:ArrayList<Rate>){
+    fun setListView(ratesLst: ArrayList<Rate>) {
         Log.d("list_view", "inside methode")
         binding.listview.adapter = ListViewAdapter(this, ratesLst)
 //rm      val listView_rates = findViewById<ListView>(R.id.listview_)
@@ -158,13 +190,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     //TODO: maybe remove later on
-    fun convertListToArray(ratesLst:List<Rate>): ArrayList<Rate> {
+    fun convertListToArray(ratesLst: List<Rate>): ArrayList<Rate> {
         val output = mutableListOf<Rate>()
 
-        for (item in ratesLst){
+        for (item in ratesLst) {
             output.add(Rate(item.name, item.spotRate))
         }
         return output.toTypedArray().toCollection(ArrayList())
     }
-
 }
