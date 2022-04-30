@@ -19,7 +19,11 @@ import org.json.JSONObject
 
 //import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
-
+//TODO: better names
+//TODO: remove not used imports
+//TODO: look how manny lines removed in this class
+//TODO: marby make dev notes file
+//TODO: use the currencyPresenter class
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -51,84 +55,84 @@ class MainActivity : AppCompatActivity() {
         val mockDataJson = mockDataObj.jsonRespose()
         val j = JsonParser(mockDataJson)
         j.convertToCurrencyModel()
-        jsonHolder(mockDataJson)
+//        jsonHolder(mockDataJson)
         //    val fixerCurrency = FixerCurrency(this)
         //    downloadTasks2()
 
     }
 
-    val apiUrl = "https://jsonplaceholder.typicode.com/posts"
-    fun downloadTasks() {
-        Log.d("respones", "method start")
+//    val apiUrl = "https://jsonplaceholder.typicode.com/posts"
+//    fun downloadTasks() {
+//        Log.d("respones", "method start")
+//
+//        val queue = Volley.newRequestQueue(this)
+//
+//        val reques = StringRequest(Request.Method.GET, apiUrl,
+//            Response.Listener { response ->
+//
+//                Log.d("respones", "Response : ${response.toString()}")
+//
+//            }, Response.ErrorListener { Log.d("respones", "that din´t work!") })
+//        queue.add(reques)
+//    }
+//    /**
+//     * @see_volley https://google.github.io/volley/simple.html
+//     */
+//    fun downloadTasks2() {
+//
+//        StrictMode.setThreadPolicy(
+//            StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build()
+//        )
+//        // Instantiate the RequestQueue.
+//        val queue = Volley.newRequestQueue(this)
+//        val url = "https://jsonplaceholder.typicode.com/posts"
+//
+//// Request a string response from the provided URL.
+//        val stringRequest = StringRequest(Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                // Display the first 500 characters of the response string.
+//                Log.d("respones", "Response is: ${response.substring(0, 500)}")
+//            },
+//            Response.ErrorListener { error -> Log.d("respones", "That didn't work! | $error") })
+//
+//// Add the request to the RequestQueue.
+//        queue.add(stringRequest)
+//    }
 
-        val queue = Volley.newRequestQueue(this)
 
-        val reques = StringRequest(Request.Method.GET, apiUrl,
-            Response.Listener { response ->
-
-                Log.d("respones", "Response : ${response.toString()}")
-
-            }, Response.ErrorListener { Log.d("respones", "that din´t work!") })
-        queue.add(reques)
-    }
-    /**
-     * @see_volley https://google.github.io/volley/simple.html
-     */
-    fun downloadTasks2() {
-
-        StrictMode.setThreadPolicy(
-            StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build()
-        )
-        // Instantiate the RequestQueue.
-        val queue = Volley.newRequestQueue(this)
-        val url = "https://jsonplaceholder.typicode.com/posts"
-
-// Request a string response from the provided URL.
-        val stringRequest = StringRequest(Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                // Display the first 500 characters of the response string.
-                Log.d("respones", "Response is: ${response.substring(0, 500)}")
-            },
-            Response.ErrorListener { error -> Log.d("respones", "That didn't work! | $error") })
-
-// Add the request to the RequestQueue.
-        queue.add(stringRequest)
-    }
-
-
-    fun jsonHolder(data: String) {
-        val gson = Gson()
-        var test:CurrencyModel = gson.fromJson(data,CurrencyModel::class.java)
-        println("from json string: " + test)
-//        val mapper = jacksonObjectMapper()
-//        val jData: List<CurrencyModel> = mapper.readValue(data)
-
-        val j = JSONObject(data)
-//        val js = gson.fromJson(j, Rate::class.java)
-        val jArray = JSONArray(data)
-
-        for (item in 0..jArray.length() - 1) {
-            var jObj = jArray.getJSONObject(item)
-            var userId = jObj.getInt("userId")
-            var id = jObj.getInt("id")
-            var title = jObj.getString("title")
-            var body = jObj.getString("body")
-            Log.d(
-                "jsonobj", "\n" +
-                        "userId : ${userId.toString()}\n" +
-                        "id     : ${id.toString()}\n" +
-                        "title  : ${title.toString()}\n" +
-                        "body   : ${body.toString()}\n" +
-                        "------------------------"
-            )
-//            Log.e("respones", "userId : ${userId.toString()}")
-//            Log.e("respones", "id     : ${id.toString()}")
-//            Log.e("respones", "title  : ${title.toString()}")
-//            Log.e("respones", "body   : ${body.toString()}")
-//            Log.e("respones", "-----------------------------------")
-
-        }
-    }
+//    fun jsonHolder(data: String) {
+//        val gson = Gson()
+//        var test:CurrencyModel = gson.fromJson(data,CurrencyModel::class.java)
+//        println("from json string: " + test)
+////        val mapper = jacksonObjectMapper()
+////        val jData: List<CurrencyModel> = mapper.readValue(data)
+//
+//        val j = JSONObject(data)
+////        val js = gson.fromJson(j, Rate::class.java)
+//        val jArray = JSONArray(data)
+//
+//        for (item in 0..jArray.length() - 1) {
+//            var jObj = jArray.getJSONObject(item)
+//            var userId = jObj.getInt("userId")
+//            var id = jObj.getInt("id")
+//            var title = jObj.getString("title")
+//            var body = jObj.getString("body")
+//            Log.d(
+//                "jsonobj", "\n" +
+//                        "userId : ${userId.toString()}\n" +
+//                        "id     : ${id.toString()}\n" +
+//                        "title  : ${title.toString()}\n" +
+//                        "body   : ${body.toString()}\n" +
+//                        "------------------------"
+//            )
+////            Log.e("respones", "userId : ${userId.toString()}")
+////            Log.e("respones", "id     : ${id.toString()}")
+////            Log.e("respones", "title  : ${title.toString()}")
+////            Log.e("respones", "body   : ${body.toString()}")
+////            Log.e("respones", "-----------------------------------")
+//
+//        }
+//    }
 
 
     fun getSpinnerSelectedValue(view: View) {
@@ -186,6 +190,7 @@ class MainActivity : AppCompatActivity() {
 //rm      listView_rates.adapter = adapter
 //rm      listView_rates.setAdapter(adapter)
     }
+
 
     //TODO: maybe remove later on
     fun convertListToArray(ratesLst: List<Rate>): ArrayList<Rate> {

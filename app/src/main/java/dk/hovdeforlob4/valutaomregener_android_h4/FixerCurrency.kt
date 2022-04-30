@@ -9,7 +9,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 
-class FixerCurrency/*(private val context: Activity)*/ {
+class FixerCurrency {
     var context: Activity? = null
     constructor(context: Activity){
         this.context = context
@@ -17,7 +17,7 @@ class FixerCurrency/*(private val context: Activity)*/ {
         downloadTasks()
     }
 
-    val apiUrl_test = "https://jsonplaceholder.typicode.com/posts"
+//    val apiUrl_test = "https://jsonplaceholder.typicode.com/posts"
     val apiUrl = "http://data.fixer.io/api/latest?access_key=7534e85c949fefdbe14a2d2a9f66797b"
     fun downloadTasks(){
         val queue = Volley.newRequestQueue(context)
@@ -33,24 +33,24 @@ class FixerCurrency/*(private val context: Activity)*/ {
         queue.add(reques)
     }
 
-    fun jsonHolder(data:String){
-        val jArray = JSONArray(data)
-
-        for (item in 0..jArray.length()-1){
-            var jObj = jArray.getJSONObject(item)
-            var userId = jObj.getInt("userId")
-            var id = jObj.getInt("id")
-            var title = jObj.getString("title")
-            var body = jObj.getString("body")
-            Log.e("respones", "userId : ${userId.toString()}")
-            Log.e("respones", "id     : ${id.toString()}")
-            Log.e("respones", "title  : ${title.toString()}")
-            Log.e("respones", "body   : ${body.toString()}")
-            Log.e("respones", "-----------------------------------")
-
-        }
-
-    }
+//    fun jsonHolder(data:String){
+//        val jArray = JSONArray(data)
+//
+//        for (item in 0..jArray.length()-1){
+//            var jObj = jArray.getJSONObject(item)
+//            var userId = jObj.getInt("userId")
+//            var id = jObj.getInt("id")
+//            var title = jObj.getString("title")
+//            var body = jObj.getString("body")
+//            Log.e("respones", "userId : ${userId.toString()}")
+//            Log.e("respones", "id     : ${id.toString()}")
+//            Log.e("respones", "title  : ${title.toString()}")
+//            Log.e("respones", "body   : ${body.toString()}")
+//            Log.e("respones", "-----------------------------------")
+//
+//        }
+//
+//    }
 
     /**
      * @see_jsonPlaceholder https://jsonplaceholder.typicode.com/
