@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.createBitmap
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val mockDataJson = mockDataObj.jsonRespose()
         val j = JsonParser(mockDataJson)
-        j.ConvertToCurrercyModel()
+        j.convertToCurrencyModel()
         jsonHolder(mockDataJson)
         //    val fixerCurrency = FixerCurrency(this)
         //    downloadTasks2()
