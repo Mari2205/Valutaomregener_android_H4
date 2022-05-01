@@ -23,7 +23,7 @@ class MockCurrency : CurrencyDAO {
      * this method gives a simlpe lst of rates
      * @return List<Rate>
      */
-    override fun getRates(base: String): List<Rate> {
+    override fun getRates(): List<Rate> {
         val ratesLst = mutableListOf<Rate>()
 
         for (item in keyPair_rates){

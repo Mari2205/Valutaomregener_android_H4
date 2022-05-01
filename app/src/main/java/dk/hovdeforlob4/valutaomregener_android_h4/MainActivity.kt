@@ -1,7 +1,6 @@
 package dk.hovdeforlob4.valutaomregener_android_h4
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -13,6 +12,8 @@ import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBindin
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val dataObj = MockCurrency();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide() // removes the actionbar
@@ -20,43 +21,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val mockDataObj = MockCurrency()
-        val mockData = mockDataObj.getRates("")
-
+        val mockData = dataObj.getRates()
         var baseArr: Array<String> = getAllBaseCurrency(mockData)
         setSpinner(baseArr)
 
     }
 
 
-    fun calcBtn(view: View){
-        val textbox = findViewById<EditText>(R.id.editText_valuta)
+     fun calcBtn(view: View){
+        val textBox = findViewById<EditText>(R.id.editText_valuta)
 
-        val mockDataObj = MockCurrency()
-        val mockDataJson = mockDataObj.jsonRespose()
-        val jparser = JsonParser(mockDataJson)
+        val mockDataJson = dataObj.jsonRespose()
+        val parser = JsonParser(mockDataJson)
+        val data = parser.convertToCurrencyModel()
 
-        val data = jparser.convertToCurrencyModel()
-
-        val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
-        val usrBase: String = spinner_wig.getSelectedItem().toString()
-
-        val input_value = textbox.text.toString().toDouble()
+        val usrBase: String = getSpinnerSelectedValue()
+        val inputValue = textBox.text.toString().toDouble()
 
         val currencyPresenter = CurrencyPresenter()
-        val completValueLst = currencyPresenter.convertCurrency(usrBase, input_value, data.rates)
+        val completeValueLst = currencyPresenter.convertCurrency(usrBase, inputValue, data.rates)
 
-        val arr = convertListToArray(completValueLst)
+        val arr = convertListToArray(completeValueLst)
         setListView(arr)
     }
 
 
-    fun getSpinnerSelectedValue(view: View) {
-        val textbox = findViewById<EditText>(R.id.editText_valuta)
+    private fun getSpinnerSelectedValue():String {
         val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
-        val text: String = spinner_wig.getSelectedItem().toString()
+        val usrCurrencyBase: String = spinner_wig.getSelectedItem().toString()
 
-        textbox.setText("selected : $text")
+        return usrCurrencyBase
     }
 
 
@@ -64,14 +58,12 @@ class MainActivity : AppCompatActivity() {
      * this method takes an list of Rates og sorter all currency bases into an array of string
      * @see_loops Doc for kotlin Loops : https://kotlinlang.org/docs/control-flow.html#for-loops
      */
-    fun getAllBaseCurrency(rateLst: List<Rate>): Array<String> {
-
+    private fun getAllBaseCurrency(rateLst: List<Rate>): Array<String> {
         val currencyBaseArrLst: MutableList<String> = ArrayList()
 
         for (item in rateLst) {
             currencyBaseArrLst.add(item.name)
         }
-
         return currencyBaseArrLst.toTypedArray()
     }
 
@@ -80,32 +72,30 @@ class MainActivity : AppCompatActivity() {
      * this method sets array of currency base to the spinner(dropdown box)
      * @see_spinner Example code on spinner : https://www.tutorialkart.com/kotlin-android/android-spinner-kotlin-example/
      */
-    fun setSpinner(baseArr: Array<String>) {
+    private fun setSpinner(baseArr: Array<String>) {
         val spinnerLst = findViewById<Spinner>(R.id.spinner_base)
-        // TODO: look into adapter
-        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, baseArr)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerLst!!.setAdapter(aa)
+
+        val adapterArr = ArrayAdapter(this, android.R.layout.simple_spinner_item, baseArr)
+        adapterArr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerLst!!.setAdapter(adapterArr)
     }
 
 
     /**
-     * this method sets listview wiget with a custom layout with cuency rates (rate(DKK) and values(1.553))
+     * this method sets listview widget with a custom layout with currency rates (rate(DKK) and values(1.553))
      */
-    fun setListView(ratesLst: ArrayList<Rate>) {
-        Log.d("list_view", "inside methode")
+    private fun setListView(ratesLst: ArrayList<Rate>) {
         binding.listview.adapter = ListViewAdapter(this, ratesLst)
 
     }
 
 
-    //TODO: maybe remove later on
-    fun convertListToArray(ratesLst: List<Rate>): ArrayList<Rate> {
-        val output = mutableListOf<Rate>()
+    private fun convertListToArray(ratesLst: List<Rate>): ArrayList<Rate> {
+        val currencyLst = mutableListOf<Rate>()
 
         for (item in ratesLst) {
-            output.add(Rate(item.name, item.spotRate))
+            currencyLst.add(Rate(item.name, item.spotRate))
         }
-        return output.toTypedArray().toCollection(ArrayList())
+        return currencyLst.toTypedArray().toCollection(ArrayList())
     }
 }
