@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val dataObj = MockCurrency();
+    private val parser = JsonParser(dataObj.jsonRespose())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +22,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val mockData = dataObj.getRates()
-        var baseArr: Array<String> = getAllBaseCurrency(mockData)
+//        val mockData = dataObj.jsonRespose()
+//        val j = JsonParser(mockData)
+        val currency = parser.convertToCurrencyModel()
+
+
+        var baseArr: Array<String> = getAllBaseCurrency(currency.rates)
         setSpinner(baseArr)
 
     }
@@ -31,8 +36,8 @@ class MainActivity : AppCompatActivity() {
      fun calcBtn(view: View){
         val textBox = findViewById<EditText>(R.id.editText_valuta)
 
-        val mockDataJson = dataObj.jsonRespose()
-        val parser = JsonParser(mockDataJson)
+//        val mockDataJson = dataObj.jsonRespose()
+//        val parser = JsonParser(mockDataJson)
         val data = parser.convertToCurrencyModel()
 
         val usrBase: String = getSpinnerSelectedValue()
