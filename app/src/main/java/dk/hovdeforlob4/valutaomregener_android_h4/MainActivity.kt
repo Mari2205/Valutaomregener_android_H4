@@ -10,14 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBinding
 
 
-//TODO: better names
-//TODO: remove not used imports
-//TODO: look how manny lines removed in this class
-//TODO: maybe make dev notes file
-//TODO: use the currencyPresenter class
-//TODO: Clean up / refactor
-//TODO: look into adapter
-//TODO: make overload in calc
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -27,9 +19,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /**
-         * @see_interface interfaces implementation: https://www.youtube.com/watch?v=5C7W98VVI88
-         */
+//        /**
+//         * @see_interface interfaces implementation: https://www.youtube.com/watch?v=5C7W98VVI88
+//         */
 
         val mockDataObj = MockCurrency()
         val mockData = mockDataObj.getRates("")
@@ -55,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val input_value = textbox.text.toString().toDouble()
 
         val currencyPresenter = CurrencyPresenter()
-        val completValueLst = currencyPresenter.convertCurrency(usrBase, input_value, data.rates) //TODO: make overload
+        val completValueLst = currencyPresenter.convertCurrency(usrBase, input_value, data.rates)
 
         val arr = convertListToArray(completValueLst)
         setListView(arr)

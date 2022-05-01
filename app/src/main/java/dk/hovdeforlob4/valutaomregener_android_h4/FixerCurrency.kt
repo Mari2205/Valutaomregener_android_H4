@@ -30,8 +30,8 @@ class FixerCurrency {
         queue.add(reques)
     }
 
-    /**
-     * @see_jsonPlaceholder https://jsonplaceholder.typicode.com/
-     * @see_CurrencyAPI fixer.io: https://fixer.io/
-     */
+//    /**
+//     * @see_jsonPlaceholder https://jsonplaceholder.typicode.com/
+//     * @see_CurrencyAPI fixer.io: https://fixer.io/
+//     */
 }

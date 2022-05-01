@@ -1,0 +1,36 @@
+
+//TODO: better names (main)
+//TODO: remove not used imports
+//TODO: maybe make dev notes file
+//TODO: Clean up / refactor (semi done)
+//TODO: look into adapter (maybe not anymore)
+//TODO: make overload in calc
+
+
+        /**
+         * @see_interface interfaces implementation: https://www.youtube.com/watch?v=5C7W98VVI88
+         */
+
+          * @see_spinner Example code on spinner : https://www.tutorialkart.com/kotlin-android/android-spinner-kotlin-example/
+
+               * @see_loops Doc for kotlin Loops : https://kotlinlang.org/docs/control-flow.html#for-loops
+
+
+
+         * @sse_prop doc on prop        https://www.baeldung.com/kotlin/getters-setters
+         * @see_ctor doc on constructor https://kotlinlang.org/docs/classes.html#secondary-constructors
+
+
+
+         /**
+          * @see_Adapter create a adapter : https://www.youtube.com/watch?v=KPvYXXERLjk
+          */
+
+          //    val apiUrl_test = "https://jsonplaceholder.typicode.com/posts"
+              /**
+               * @see_jsonPlaceholder https://jsonplaceholder.typicode.com/
+               * @see_CurrencyAPI fixer.io: https://fixer.io/
+               */
+
+
+
