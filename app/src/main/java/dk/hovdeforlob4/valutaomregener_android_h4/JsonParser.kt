@@ -1,7 +1,6 @@
 package dk.hovdeforlob4.valutaomregener_android_h4
 
 
-//TODO: better names
 class JsonParser(private val jsonString: String) {
 
     /**
@@ -10,42 +9,41 @@ class JsonParser(private val jsonString: String) {
      */
     fun convertToCurrencyModel():CurrencyModel{
         // Regex patton: /([A-z]){3}":(\d+.\d+)/g
-        //val re = jsonString.matches(Regex("/([A-z]){3}\":(\\d+.\\d+)/g"))
 
-        val spiltedJson = prepJsonString(jsonString)
-        val other = spiltedJson[0]
-        val baseAndRats = spiltedJson[1]
+        val arrayOfJsonContains = prepJsonString(jsonString)
+        val exchangeRatesPropInfoStr = arrayOfJsonContains[0]
+        val exchangeRatesStr = arrayOfJsonContains[1]
 
-        val other_hashmap = makeHashMap(other)
-        val baseAndRates = convertStringToList(baseAndRats)
+        val exchangeRatesPropInfoHashmap = makeHashMap(exchangeRatesPropInfoStr)
+        val exchangeRatesLst = convertStringToList(exchangeRatesStr)
 
-        val date      = other_hashmap.getValue("date")
-        val timestamp = other_hashmap.getValue("timestamp").toInt()
-        val base      = other_hashmap.getValue("base")
+        val date      = exchangeRatesPropInfoHashmap.getValue("date")
+        val timestamp = exchangeRatesPropInfoHashmap.getValue("timestamp").toInt()
+        val base      = exchangeRatesPropInfoHashmap.getValue("base")
 
         val currencyModel = CurrencyModel()
         currencyModel.date      = date
         currencyModel.timestamp = timestamp
         currencyModel.base      = base
-        currencyModel.rates     = baseAndRates
+        currencyModel.rates     = exchangeRatesLst
 
         return currencyModel
     }
 
 
     /**
-     * this method prepes an json string fx. removes unseary chars and splits up in
+     * this method prepares an json string fx. removes unnecessary chars and splits up in
      * rates and other
      * @param jsonString : String
      * @return Array<String>
      */
     private fun prepJsonString(jsonString: String):Array<String>{
-        val clinedString = jsonString.replace("\"","")
+        val cleanedString = jsonString.replace("\"","")
             .replace("{" ,"")
             .replace("}" ,"")
 
-        val spiltedJson = clinedString.split("rates:").toTypedArray()
-        return spiltedJson
+        //val spiltedJson = clinedString.split("rates:").toTypedArray()
+        return cleanedString.split("rates:").toTypedArray()
     }
 
 
@@ -55,46 +53,41 @@ class JsonParser(private val jsonString: String) {
      * @return Hashmap<String, String>
      */
     private fun makeHashMap(str: String):HashMap<String, String>{
-        val hashMap = HashMap<String, String>()
+        val propHashmap = HashMap<String, String>()
 
-        val lst = str.split(",").toTypedArray()
+        val propLst = str.split(",").toTypedArray()
 
-        for (item in lst){
+        for (item in propLst){
             if (item.isNotBlank()) {
                 val split = item.split(":").toTypedArray()
                 val key = split[0]
                 val value = split[1]
 
-                hashMap.put(key,value)
+                propHashmap.put(key,value)
             }
         }
-
-        return hashMap
+        return propHashmap
     }
 
 
     /**
      * this method takes an string of rates an makes it into
-     * an List<Rate>
+     * an list of rates
      * @param jsonStr: String
      * @return List<Rate>
      */
     private fun convertStringToList(jsonStr:String):List<Rate>{
-        val baseAndRates = mutableListOf<Rate>()
+        val currencyLst = mutableListOf<Rate>()
+        val stringCurrencyArr = jsonStr.split(",").toTypedArray()
 
-
-        val rates = jsonStr.split(",").toTypedArray()
-
-        for (item in rates){
+        for (item in stringCurrencyArr){
             val split = item.split(":").toTypedArray()
             val base = split[0]
             val rate = split[1].toDouble()
 
-            baseAndRates.add(Rate(base, rate))
+            currencyLst.add(Rate(base, rate))
         }
-
-        return baseAndRates
+        return currencyLst
     }
-
 
 }
