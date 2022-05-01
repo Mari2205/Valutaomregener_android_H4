@@ -13,10 +13,11 @@ import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBindin
 //TODO: better names
 //TODO: remove not used imports
 //TODO: look how manny lines removed in this class
-//TODO: marby make dev notes file
+//TODO: maybe make dev notes file
 //TODO: use the currencyPresenter class
 //TODO: Clean up / refactor
-// TODO: look into adapter
+//TODO: look into adapter
+//TODO: make overload in calc
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val input_value = textbox.text.toString().toDouble()
 
         val currencyPresenter = CurrencyPresenter()
-        val completValueLst = currencyPresenter.ConvertCurrency(usrBase, input_value, data.rates) //TODO: make overload
+        val completValueLst = currencyPresenter.convertCurrency(usrBase, input_value, data.rates) //TODO: make overload
 
         val arr = convertListToArray(completValueLst)
         setListView(arr)

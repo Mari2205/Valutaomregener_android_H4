@@ -4,11 +4,6 @@ import kotlin.math.roundToInt
 
 class CurrencyCalculator {
 
-    constructor(){
-
-    }
-
-
     /**
      * this method will calulte the complt value of usr input
      * @param base      : String
@@ -17,47 +12,36 @@ class CurrencyCalculator {
      * @return
      */
     fun calculateValues(usrBate: String, value: Double, divRate: Double, rates_lst: List<Rate>):List<Rate>{
-        //TODO: clien up remove static code
-        val output = mutableListOf<Rate>()
+        val resultLst = mutableListOf<Rate>()
 
-
-        val result0 = value / divRate
-//        val result1 = result0 * 1.05
+        val baseValue = value / divRate
 
         for (item in rates_lst){
             if (item.name != usrBate) {
-                val result2 = result0 * item.spotRate
-                output.add(Rate(item.name, result2.roundToInt().toDouble()))
+                val result2 = baseValue * item.spotRate
+                resultLst.add(Rate(item.name, result2.roundToInt().toDouble()))
             }
         }
-
-        return  output
-
+        return  resultLst
     }
 
+
     /**
-     * this method will calculte the usr choosen rate form the base rate
-     * @param base: String
-     * @param rate: Double
+     * this method will calculate the usr chosen rate form the base rate
+     * @param usrBase: String
+     * @param rates_lst: List<Rate>
      * @return Double
      */
     fun calculateBaseRate(usrBase: String, rates_lst: List<Rate>):Double {
-        //TODO("not yet implement")
-        var output = 0.0
-        var baseRate = 0.0
         var usrRate = 0.0
 
         for (item in rates_lst){
-            if (item.name == "EUR"){
-                baseRate = item.spotRate
-            }
             if (item.name == usrBase){
                 usrRate = item.spotRate
             }
         }
 
         return usrRate
-
-
     }
+
 }
