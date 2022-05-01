@@ -22,7 +22,7 @@ class CurrencyCalculator {
 
 
         val result0 = value / divRate
-        val result1 = result0 * 1.05
+//        val result1 = result0 * 1.05
 
         for (item in rates_lst){
             if (item.name != usrRate) {
