@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        /**
-//         * @see_interface interfaces implementation: https://www.youtube.com/watch?v=5C7W98VVI88
-//         */
 
         val mockDataObj = MockCurrency()
         val mockData = mockDataObj.getRates("")

@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-///**
-// * @see_Adapter create a adapter : https://www.youtube.com/watch?v=KPvYXXERLjk
-// */
+
 class ListViewAdapter(private val context: Activity,private val arrayList: ArrayList<Rate>): ArrayAdapter<Rate>(context,
                       R.layout.listview_item,arrayList){
 

@@ -15,7 +15,6 @@ class FixerCurrency {
         fatchExchangeRates()
     }
 
-//    val apiUrl_test = "https://jsonplaceholder.typicode.com/posts"
     val apiUrl = "http://data.fixer.io/api/latest?access_key=7534e85c949fefdbe14a2d2a9f66797b"
     fun fatchExchangeRates(){
         val queue = Volley.newRequestQueue(context)
@@ -30,8 +29,4 @@ class FixerCurrency {
         queue.add(reques)
     }
 
-//    /**
-//     * @see_jsonPlaceholder https://jsonplaceholder.typicode.com/
-//     * @see_CurrencyAPI fixer.io: https://fixer.io/
-//     */
 }
