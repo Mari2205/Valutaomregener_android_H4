@@ -1,21 +1,13 @@
 package dk.hovdeforlob4.valutaomregener_android_h4
 
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBinding
-import org.json.JSONArray
-import org.json.JSONObject
 
 //import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
@@ -164,11 +156,11 @@ class MainActivity : AppCompatActivity() {
 
         val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
         val usrBase: String = spinner_wig.getSelectedItem().toString()
-        val value = calc.calcultRates(usrBase, data.rates)
+        val value = calc.calculateRates(usrBase, data.rates)
         val baseRate = value.first
         val usrRate = value.second
         val input_value = textbox.text.toString().toDouble()
-        val completValue = calc.calcultValue(usrBase, usrRate, input_value, data.rates)//TODO: make overload
+        val completValue = calc.calculateValue(usrBase, usrRate, input_value, data.rates)//TODO: make overload
 
 
         val arr = convertListToArray(completValue)

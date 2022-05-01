@@ -16,7 +16,7 @@ class CurrencyCalculator {
      * @param rates_lst : List<Rate>
      * @return
      */
-    fun calcultValue(usrRate: String, divRate: Double, value: Double, rates_lst: List<Rate>):List<Rate>{
+    fun calculateValues(usrBate: String, value: Double, divRate: Double, rates_lst: List<Rate>):List<Rate>{
         //TODO: clien up remove static code
         val output = mutableListOf<Rate>()
 
@@ -25,7 +25,7 @@ class CurrencyCalculator {
 //        val result1 = result0 * 1.05
 
         for (item in rates_lst){
-            if (item.name != usrRate) {
+            if (item.name != usrBate) {
                 val result2 = result0 * item.spotRate
                 output.add(Rate(item.name, result2.roundToInt().toDouble()))
             }
@@ -41,7 +41,7 @@ class CurrencyCalculator {
      * @param rate: Double
      * @return Double
      */
-    fun calcultRates(usrBase: String, rates_lst: List<Rate>):Pair<Double, Double>{
+    fun calculateBaseRate(usrBase: String, rates_lst: List<Rate>):Double {
         //TODO("not yet implement")
         var output = 0.0
         var baseRate = 0.0
@@ -56,8 +56,7 @@ class CurrencyCalculator {
             }
         }
 
-
-        return baseRate to usrRate
+        return usrRate
 
 
     }
