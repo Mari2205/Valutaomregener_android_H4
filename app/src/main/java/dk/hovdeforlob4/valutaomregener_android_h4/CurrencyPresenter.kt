@@ -32,7 +32,7 @@ class CurrencyPresenter {
         //---Param_end--------------------//
 
         val baserate  = calculator.calculateBaseRate(base, rates_lst)
-        val value_lst = calculator.calculateValues(base, value, baserate, rates_lst )
+        val value_lst = calculator.calculateValues(base, value, baserate, rates_lst ) //TODO: make overload
 
         return  value_lst
     }

@@ -30,20 +30,22 @@ class MainActivity : AppCompatActivity() {
         /**
          * @see_interface interfaces implementation: https://www.youtube.com/watch?v=5C7W98VVI88
          */
-        val mockData_temp = listOf<Rate>(Rate("DKK", 1.0))
+//        val mockData_temp = listOf<Rate>(Rate("DKK", 1.0))
         val mockDataObj = MockCurrency()
         val mockData = mockDataObj.getRates("")
-
-
-        Log.d("mock data", "mock data      : ${mockData[0]}")
-        Log.d("mock data", "mock data temp : ${mockData_temp[0].name}")
-
+//
+//
+//        Log.d("mock data", "mock data      : ${mockData[0]}")
+//        Log.d("mock data", "mock data temp : ${mockData_temp[0].name}")
+//
         var baseArr: Array<String> = getAllBaseCurrency(mockData)
         setSpinner(baseArr)
-        val arr = convertListToArray(mockData)
-        setListView(arr)
-        //binding.listview.adapter = ListViewAdapter(this, arr)
-        Log.d("list_view", "method run")
+//        val arr = convertListToArray(mockData)
+//        setListView(arr)
+//        //binding.listview.adapter = ListViewAdapter(this, arr)
+//        Log.d("list_view", "method run")
+
+        ///////////////////////////////////////////////
 
 //        val mockDataJson = mockDataObj.jsonRespose()
 //        val j = JsonParser(mockDataJson)
@@ -156,14 +158,16 @@ class MainActivity : AppCompatActivity() {
 
         val spinner_wig = findViewById<Spinner>(R.id.spinner_base)
         val usrBase: String = spinner_wig.getSelectedItem().toString()
-        val value = calc.calculateRates(usrBase, data.rates)
-        val baseRate = value.first
-        val usrRate = value.second
+//        val value = calc.calculateRates(usrBase, data.rates)
+//        val baseRate = value.first
+//        val usrRate = value.second
         val input_value = textbox.text.toString().toDouble()
-        val completValue = calc.calculateValue(usrBase, usrRate, input_value, data.rates)//TODO: make overload
+//        val completValue = calc.calculateValue(usrBase, usrRate, input_value, data.rates)//TODO: make overload
 
+        val currencyPresenter = CurrencyPresenter()
+        val completValueLst = currencyPresenter.ConvertCurrency(usrBase, input_value, data.rates)
 
-        val arr = convertListToArray(completValue)
+        val arr = convertListToArray(completValueLst)
         setListView(arr)
     }
 
