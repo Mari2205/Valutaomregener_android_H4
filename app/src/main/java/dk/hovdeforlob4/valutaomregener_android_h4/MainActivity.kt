@@ -1,6 +1,7 @@
 package dk.hovdeforlob4.valutaomregener_android_h4
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -12,8 +13,12 @@ import dk.hovdeforlob4.valutaomregener_android_h4.databinding.ActivityMainBindin
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val dataObj = MockCurrency();
-    private val parser = JsonParser(dataObj.jsonRespose())
+    private lateinit var dataObj: FixerCurrency
+    private val mockdataObj = MockCurrency()
+    private lateinit var parser : JsonParser
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-//        val mockData = dataObj.jsonRespose()
-//        val j = JsonParser(mockData)
+        parser = JsonParser(mockdataObj.jsonRespose())
         val currency = parser.convertToCurrencyModel()
-
-
         var baseArr: Array<String> = getAllBaseCurrency(currency.rates)
         setSpinner(baseArr)
 
@@ -36,14 +38,12 @@ class MainActivity : AppCompatActivity() {
      fun calcBtn(view: View){
         val textBox = findViewById<EditText>(R.id.editText_valuta)
 
-//        val mockDataJson = dataObj.jsonRespose()
-//        val parser = JsonParser(mockDataJson)
-        val data = parser.convertToCurrencyModel()
-
         val usrBase: String = getSpinnerSelectedValue()
         val inputValue = textBox.text.toString().toDouble()
 
         val currencyPresenter = CurrencyPresenter()
+         val data = parser.convertToCurrencyModel()
+
         val completeValueLst = currencyPresenter.convertCurrency(usrBase, inputValue, data.rates)
 
         val arr = convertListToArray(completeValueLst)
